@@ -1,0 +1,177 @@
+openapi: "3.0.0"
+info:
+  title: go-binance-bot
+  version: 1.0.0
+servers:
+  - url: localhost:3000
+    description: Localhost
+paths:
+  /ping:
+    get:
+      summary: Ping binance
+      responses:
+        200:
+          description: Binance response with successfully
+        500:
+          description: Internal Server Error
+  /accounts/me:
+    get:
+      summary: Get current account information
+      responses:
+        200:
+          description: Current account information response with successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        500:
+          description: Internal Server Error
+  /exchanges:
+    get:
+      summary: Get exchanges info
+      responses:
+        200:
+          description: Response exchanges info successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        500:
+          description: Internal Server Error
+  /symbols/:symbol/orders:
+    get:
+      summary: List of orders
+      responses:
+        200:
+          description: Response list of orders successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Order'
+        500:
+          description: Internal Server Error
+    post:
+      summary: Create order
+      responses:
+        200:
+          description: New order created with successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        500:
+          description: Internal Server Error
+  /symbols/:symbol/orders/:id:
+    get:
+      summary: Get order
+      responses:
+        200:
+          description: Response order successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        500:
+          description: Internal Server Error
+    delete:
+      summary: Cancel order
+      responses:
+        200:
+          description: Order canceled with successfully
+        500:
+          description: Internal Server Error
+components:
+  schemas:
+    Account:
+      type: object
+      properties:
+        makerCommission:
+          type: integer
+          example: 1
+        takerCommission:
+          type: integer
+          example: 1
+        buyerCommission:
+          type: integer
+          example: 1
+        sellerCommission:
+          type: integer
+          example: 1
+        canTrade:
+          type: boolean
+          example: 1
+        canWithdraw:
+          type: integer
+          example: 1
+        canDeposit:
+          type: integer
+          example: 1
+        updateTime:
+          type: integer
+          example: 1
+        accountType:
+          type: integer
+          example: 1
+        balances:
+          type: array
+          items:
+            type: object
+            properties:
+              asset:
+                type: string
+                example: "USDT"
+              free:
+                type: string
+                example: "3.28168543"
+              locked:
+                type: string
+                example: "0.00000000"
+        permissions:
+          type: integer
+          example: 1
+    Order:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: "BNBETH"
+        orderId:
+          type: integer
+          example: 1234
+        clientOrderId:
+          type: string
+          example: "TODO"
+        transactTime:
+          type: integer
+          example: 1234
+        price:
+          type: string
+          example: "0.0030000"
+        origQty:
+          type: string
+          example: "5"
+        executedQuantity:
+          type: string
+          example: "5"
+        cummulativeQuoteQty:
+          type: string
+          example: "5"
+        isIsolated:
+          type: boolean
+          example: false
+        status:
+          type: string
+          example: "New"
+        timeInForce:
+          type: string
+          example: "TODO"
+        type:
+          type: string
+          example: "TODO"
+        side:
+          type: string
+          example: "TODO"
