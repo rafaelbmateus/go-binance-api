@@ -80,8 +80,51 @@ paths:
     delete:
       summary: Cancel order
       responses:
-        200:
+        204:
           description: Order canceled with successfully
+        500:
+          description: Internal Server Error
+  /strategies:
+    get:
+      summary: Get bot strategies list
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Strategy'
+        500:
+          description: Internal Server Error
+    post:
+      summary: Create bot strategy
+      responses:
+        200:
+          description: Strategy created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Strategy'
+        500:
+          description: Internal Server Error
+  /strategies/:id:
+    get:
+      summary: Get bot strategy
+      responses:
+        200:
+          description: Response strategy successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Strategy'
+        500:
+          description: Internal Server Error
+    delete:
+      summary: Cancel bot strategy
+      responses:
+        204:
+          description: Strategy canceled with successfully
         500:
           description: Internal Server Error
 components:
@@ -175,3 +218,18 @@ components:
         side:
           type: string
           example: "TODO"
+    Strategy:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: "BNBETH"
+        amount:
+          type: string
+          example: "10.00"
+        priceLow:
+          type: string
+          example: "1.00"
+        priceHi:
+          type: string
+          example: "2.00"

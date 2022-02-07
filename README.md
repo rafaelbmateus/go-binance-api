@@ -32,7 +32,9 @@ To up the containers run this make command:
 make up
 ```
 
-Will be available in [localhost](http://localhost:3000)
+Will be available in [localhost:3000](http://localhost:3000)
+
+### Get 
 
 ## Binance API
 
