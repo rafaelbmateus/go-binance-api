@@ -9,6 +9,8 @@ paths:
   /ping:
     get:
       summary: Ping binance
+      tags:
+        - health
       responses:
         200:
           description: Binance response with successfully
@@ -17,6 +19,8 @@ paths:
   /accounts/me:
     get:
       summary: Get current account information
+      tags:
+        - accounts
       responses:
         200:
           description: Current account information response with successfully
@@ -29,6 +33,8 @@ paths:
   /exchanges:
     get:
       summary: Get exchanges info
+      tags:
+        - exchanges
       responses:
         200:
           description: Response exchanges info successfully
@@ -40,9 +46,11 @@ paths:
                   $ref: '#/components/schemas/Order'
         500:
           description: Internal Server Error
-  /symbols/:symbol/orders:
+  /orders:
     get:
       summary: List of orders
+      tags:
+        - orders
       responses:
         200:
           description: Response list of orders successfully
@@ -56,6 +64,8 @@ paths:
           description: Internal Server Error
     post:
       summary: Create order
+      tags:
+        - orders
       responses:
         200:
           description: New order created with successfully
@@ -65,9 +75,11 @@ paths:
                 $ref: '#/components/schemas/Order'
         500:
           description: Internal Server Error
-  /symbols/:symbol/orders/:id:
+  /orders/:id:
     get:
       summary: Get order
+      tags:
+        - orders
       responses:
         200:
           description: Response order successfully
@@ -79,6 +91,8 @@ paths:
           description: Internal Server Error
     delete:
       summary: Cancel order
+      tags:
+        - orders
       responses:
         204:
           description: Order canceled with successfully
@@ -87,8 +101,11 @@ paths:
   /strategies:
     get:
       summary: Get bot strategies list
+      tags:
+        - strategies
       responses:
         200:
+          description: Strategy got successfully
           content:
             application/json:
               schema:
@@ -99,6 +116,19 @@ paths:
           description: Internal Server Error
     post:
       summary: Create bot strategy
+      tags:
+        - strategies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Strategy'
+            example:
+              symbol: "BNBETH"
+              amount: "10.00"
+              priceLow: "1.00"
+              priceHi: "2.00"
       responses:
         200:
           description: Strategy created successfully
@@ -111,6 +141,8 @@ paths:
   /strategies/:id:
     get:
       summary: Get bot strategy
+      tags:
+        - strategies
       responses:
         200:
           description: Response strategy successfully
@@ -120,8 +152,29 @@ paths:
                 $ref: '#/components/schemas/Strategy'
         500:
           description: Internal Server Error
+    put:
+      summary: Update bot strategy
+      tags:
+        - strategies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Strategy'
+      responses:
+        200:
+          description: Strategy created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Strategy'
+        500:
+          description: Internal Server Error
     delete:
       summary: Cancel bot strategy
+      tags:
+        - strategies
       responses:
         204:
           description: Strategy canceled with successfully

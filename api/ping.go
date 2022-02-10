@@ -14,6 +14,7 @@ func Ping(s *Server) gin.HandlerFunc {
 		err := s.UsecaseService.Ping()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
+			return
 		}
 
 		c.JSON(http.StatusOK, "binance is up")

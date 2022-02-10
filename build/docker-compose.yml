@@ -9,9 +9,24 @@ services:
     env_file:
       - ./../.env
     environment:
-      - HOST=0.0.0.0:3000
-      - CGO_ENABLED=0
-      - GOOS=linux
+      HOST: "0.0.0.0:3000"
+      CGO_ENABLED: "0"
+      GOOS: "linux"
+      DB_HOST: "db"
+      DB_USER: "user"
+      DB_NAME: "database"
+      DB_PASSWORD: "secret"
+      DB_PORT: "5432"
     ports:
       - "3000:3000"
     command: go run main.go
+
+  db:
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: "database"
+      POSTGRES_USER: "user"
+      POSTGRES_PASSWORD: "secret"
+    volumes:
+      - ../data:/var/lib/postgresql/data

@@ -21,11 +21,13 @@ func CreateOrder(s *Server) gin.HandlerFunc {
 		err := c.BindJSON(&req)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
+			return
 		}
 
 		order, err := s.UsecaseService.CreateOrder(getSymbol(c), req.quantity, req.price)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
+			return
 		}
 
 		c.JSON(http.StatusOK, order)
@@ -39,11 +41,13 @@ func GetOrder(s *Server) gin.HandlerFunc {
 		orderID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
+			return
 		}
 
 		acc, err := s.UsecaseService.GetOrder(getSymbol(c), orderID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
+			return
 		}
 
 		c.JSON(http.StatusOK, acc)
@@ -57,6 +61,7 @@ func ListOrders(s *Server) gin.HandlerFunc {
 		orders, err := s.UsecaseService.ListOpenOrders(getSymbol(c))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
+			return
 		}
 
 		c.JSON(http.StatusOK, orders)
@@ -70,11 +75,13 @@ func CancelOrder(s *Server) gin.HandlerFunc {
 		orderID, err := strconv.ParseInt(c.Param("id"), 10, 64)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, err)
+			return
 		}
 
 		err = s.UsecaseService.CancelOrder(getSymbol(c), orderID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
+			return
 		}
 
 		c.JSON(http.StatusOK, "order-canceled")
