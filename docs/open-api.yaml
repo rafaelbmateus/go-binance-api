@@ -46,6 +46,22 @@ paths:
                   $ref: '#/components/schemas/Order'
         500:
           description: Internal Server Error
+  /klines/:symbol:
+    get:
+      summary: Get klines list
+      tags:
+        - klines
+      responses:
+        200:
+          description: Klines got successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Kline'
+        500:
+          description: Internal Server Error
   /orders:
     get:
       summary: List of orders
@@ -66,6 +82,22 @@ paths:
       summary: Create order
       tags:
         - orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  example: "LOKAUSDT"
+                quantity:
+                  type: string
+                  example: "7.20000000"
+                price:
+                  type: string
+                  example: "2.65000000"
       responses:
         200:
           description: New order created with successfully
@@ -124,11 +156,6 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/Strategy'
-            example:
-              symbol: "BNBETH"
-              amount: "10.00"
-              priceLow: "1.00"
-              priceHi: "2.00"
       responses:
         200:
           description: Strategy created successfully
@@ -286,3 +313,39 @@ components:
         priceHi:
           type: string
           example: "2.00"
+    Kline:
+      type: object
+      properties:
+        openTime:
+          type: number
+          example: 1644575400000
+        open:
+          type: string
+          example: "2.11000000"
+        high:
+          type: string
+          example: "2.11000000"
+        low:
+          type: string
+          example: "2.10800000"
+        close:
+          type: string
+          example: "2.10800000"
+        volume:
+          type: string
+          example: "412.10000000"
+        closeTime:
+          type: number
+          example: 1644575459999
+        quoteAssetVolume:
+          type: string
+          example: "869.49174000"
+        tradeNum:
+          type: number
+          example: 6
+        takerBuyBaseAssetVolume:
+          type: string
+          example: "0.00000000"
+        takerBuyQuoteAssetVolume:
+          type: string
+          example: "0.00000000"

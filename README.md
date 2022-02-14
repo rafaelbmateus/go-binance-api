@@ -6,10 +6,10 @@ Go Bincance Bot is a RESTful API.
 |---|---|---|
 | GET | /accounts/me | Get current account information |
 | GET | /exchanges | Get exchanges info |
-| GET | /symbols/:symbol/orders | Response list of orders successfully |
-| POST | /symbols/:symbol/orders | New order created with successfully |
-| GET | /symbols/:symbol/orders/:id | Response order successfully |
-| DELETE | /symbols/:symbol/orders/:id | Order canceled with successfully |
+| GET | /orders | Response list of orders successfully |
+| POST | /orders | New order created with successfully |
+| GET | /orders/:id | Response order successfully |
+| DELETE | /orders/:id | Order canceled with successfully |
 
 For full handshake check the [OpenAPI Specification](docs/open-api.yaml).
 
@@ -34,7 +34,9 @@ make up
 
 Will be available in [localhost:3000](http://localhost:3000)
 
-### Get 
+### List open orders
+
+
 
 ## Binance API
 

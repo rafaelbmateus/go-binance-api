@@ -9,9 +9,9 @@ import (
 
 func GetKlines(s *Server) gin.HandlerFunc {
 	return gin.HandlerFunc(func(c *gin.Context) {
-		log.Info().Msg("handler get account")
+		log.Info().Msg("handler get klines")
 
-		acc, err := s.UsecaseService.GetKlines(getSymbol(c), "1m")
+		acc, err := s.UsecaseService.GetKlines(c.Param("symbol"), "1m")
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 		}

@@ -9,6 +9,7 @@ import (
 )
 
 type CreateOrderReq struct {
+	symbol   string
 	quantity string
 	price    string
 }
@@ -24,7 +25,7 @@ func CreateOrder(s *Server) gin.HandlerFunc {
 			return
 		}
 
-		order, err := s.UsecaseService.CreateOrder(getSymbol(c), req.quantity, req.price)
+		order, err := s.UsecaseService.CreateOrder(req.symbol, req.quantity, req.price)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 			return
@@ -44,7 +45,7 @@ func GetOrder(s *Server) gin.HandlerFunc {
 			return
 		}
 
-		acc, err := s.UsecaseService.GetOrder(getSymbol(c), orderID)
+		acc, err := s.UsecaseService.GetOrder(orderID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 			return
@@ -58,7 +59,7 @@ func ListOrders(s *Server) gin.HandlerFunc {
 	return gin.HandlerFunc(func(c *gin.Context) {
 		log.Info().Msg("handler list of orders")
 
-		orders, err := s.UsecaseService.ListOpenOrders(getSymbol(c))
+		orders, err := s.UsecaseService.ListOpenOrders()
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 			return
@@ -78,7 +79,7 @@ func CancelOrder(s *Server) gin.HandlerFunc {
 			return
 		}
 
-		err = s.UsecaseService.CancelOrder(getSymbol(c), orderID)
+		err = s.UsecaseService.CancelOrder(orderID)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, err)
 			return
@@ -86,8 +87,4 @@ func CancelOrder(s *Server) gin.HandlerFunc {
 
 		c.JSON(http.StatusOK, "order-canceled")
 	})
-}
-
-func getSymbol(c *gin.Context) string {
-	return c.Param("symbol")
 }

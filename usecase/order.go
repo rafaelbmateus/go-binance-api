@@ -18,9 +18,8 @@ func (c UsecaseService) CreateOrder(symbol, quantity, price string) (*binance.Cr
 }
 
 // GetOrder
-func (c UsecaseService) GetOrder(symbol string, orderID int64) (*binance.Order, error) {
-	order, err := c.Binance.NewGetOrderService().Symbol(symbol).
-		OrderID(orderID).Do(c.Context)
+func (c UsecaseService) GetOrder(orderID int64) (*binance.Order, error) {
+	order, err := c.Binance.NewGetOrderService().OrderID(orderID).Do(c.Context)
 	if err != nil {
 		return nil, err
 	}
@@ -28,9 +27,8 @@ func (c UsecaseService) GetOrder(symbol string, orderID int64) (*binance.Order, 
 	return order, nil
 }
 
-func (c UsecaseService) CancelOrder(symbol string, orderID int64) error {
-	_, err := c.Binance.NewCancelOrderService().Symbol(symbol).
-		OrderID(orderID).Do(c.Context)
+func (c UsecaseService) CancelOrder(orderID int64) error {
+	_, err := c.Binance.NewCancelOrderService().OrderID(orderID).Do(c.Context)
 	if err != nil {
 		return err
 	}
@@ -38,9 +36,8 @@ func (c UsecaseService) CancelOrder(symbol string, orderID int64) error {
 	return nil
 }
 
-func (c UsecaseService) ListOpenOrders(symbol string) ([]*binance.Order, error) {
-	openOrders, err := c.Binance.NewListOpenOrdersService().Symbol(symbol).
-		Do(c.Context)
+func (c UsecaseService) ListOpenOrders() ([]*binance.Order, error) {
+	openOrders, err := c.Binance.NewListOpenOrdersService().Do(c.Context)
 	if err != nil {
 		return nil, err
 	}
@@ -48,9 +45,8 @@ func (c UsecaseService) ListOpenOrders(symbol string) ([]*binance.Order, error) 
 	return openOrders, nil
 }
 
-func (c UsecaseService) ListOrders(symbol string) ([]*binance.Order, error) {
-	orders, err := c.Binance.NewListOrdersService().Symbol(symbol).
-		Do(c.Context)
+func (c UsecaseService) ListOrders() ([]*binance.Order, error) {
+	orders, err := c.Binance.NewListOrdersService().Do(c.Context)
 	if err != nil {
 		return nil, err
 	}
